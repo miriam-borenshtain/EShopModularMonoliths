@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Windows.Input;
 
 namespace Shared.Behaviors
 {

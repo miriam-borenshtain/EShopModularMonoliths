@@ -39,7 +39,7 @@ public class DailyBasketCleanupWorker(
 
         if (delay > TimeSpan.Zero)
         {
-            logger.LogInformation("Next run in {Delay}", delay);
+            logger.LogInformation("Next BasketCleanup execution scheduled in {DelayHours} hours and {DelayMinutes} minutes", (int)delay.TotalHours, delay.Minutes);
             await Task.Delay(delay, stoppingToken);
         }
     }
