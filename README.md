@@ -1,63 +1,54 @@
-# EShop – Modular Monolith & Microservices Architecture
+# EShop – Modular Monolith & Microservices
 
-[cite_start]A high-performance e-commerce platform built with **.NET 8** and **C# 12**, demonstrating advanced architectural patterns and a strategic migration path from a **Modular Monolith** to **Microservices** using the **Strangler Fig Pattern**.
+This repository features an EShop system implementation showcasing modern architectural patterns and advanced .NET 8 techniques, demonstrating a migration path from a **Modular Monolith** to **Microservices** using the **Strangler Fig Pattern**.
 
-## 🏗️ Architectural Excellence
-
-[cite_start]This repository serves as a reference implementation for modern enterprise-grade patterns, showcasing the skills applied in high-performance financial systems[cite: 8, 54]:
-
-1.  **Modular Monolith (Modulith):** Organized for high cohesion and low coupling between business modules.
-2.  [cite_start]**Vertical Slice Architecture (VSA):** Focusing on features over layers to improve maintainability and delivery speed.
-3.  [cite_start]**Domain-Driven Design (DDD):** Encapsulating complex business logic within core domains.
-4.  [cite_start]**CQRS w/ MediatR:** Strict separation of Commands and Queries, enhanced with **Validation Pipeline Behaviors** via **FluentValidation**[cite: 9, 43, 55].
+## 🏗️ Architectural Patterns
+* **Modular Monoliths (Modulith)** Architecture
+* **Vertical Slice Architecture (VSA)**
+* **Domain-Driven Design (DDD)**
+* **Command Query Responsibility Segregation (CQRS)**
+* **Outbox Pattern** for Reliable Messaging
 
 ---
 
-## 🛠️ Key Modules & Technologies
+## 🛠️ Modules Overview
 
 ### 1. Catalog Module
-* [cite_start]**Framework:** Built with **ASP.NET Core Minimal APIs** and **Carter**[cite: 3, 48].
-* [cite_start]**Persistence:** Data management using **EF Core (Code-First)** with **PostgreSQL**[cite: 42, 90].
-* **Cross-Cutting Concerns:** Integrated Health Checks, Global Exception Handling, and Structured Logging.
+* **Framework:** ASP.NET Core Minimal APIs, .NET 8, and C# 12 features.
+* **Architecture:** Vertical Slice Architecture implementation with Feature folders and single .cs file (includes different classes in one file).
+* **CQRS:** Implementation using **MediatR** library.
+* **Validation:** Pipeline Behaviors with MediatR and **FluentValidation**.
+* **Data:** Entity Framework Core Code-First approach and Migrations on **PostgreSQL**.
+* **Routing:** Used **Carter** for Minimal API endpoint definition.
+* **Cross-Cutting Concerns:** Logging, Global Exception Handling, and Health Checks.
 
 ### 2. Basket Module
-* [cite_start]**Caching:** High-speed data access using **Redis** distributed cache[cite: 43, 91].
-* **Design Patterns:** Implementation of Proxy, Decorator, and Cache-aside patterns.
-* [cite_start]**Reliability:** Guaranteed message delivery using the **Outbox Pattern**.
+* **Caching:** Using **Redis** as a Distributed Cache over PostgreSQL database.
+* **Patterns:** Implements **Proxy, Decorator, and Cache-aside** patterns.
+* **Messaging:** Publish `BasketCheckoutEvent` to **RabbitMQ** via **MassTransit** library.
+* **Reliability:** Implement **Outbox Pattern** for Reliable Messaging w/ BasketCheckout Use Case.
 
-### 3. Identity & Security
-* [cite_start]**Authentication:** Secured with **OAuth2** and **OpenID Connect** via **Keycloak**[cite: 43, 91].
-* [cite_start]**Authorization:** JWTBearer token integration for secure identity management[cite: 20, 65].
+### 3. Identity Module
+* **Protocols:** OAuth2 + OpenID Connect Flows with **Keycloak**.
+* **Infrastructure:** Setup Keycloak into Docker-compose file as a Backing Service.
+* **Security:** JwtBearer token for OpenID Connect with Keycloak Identity.
 
----
-
-## 📡 Communication & Messaging
-
-[cite_start]The system handles complex integrations similar to those managed in large-scale environments[cite: 16, 61]:
-
-* **Synchronous:** In-process method calls for high-performance module interaction.
-* [cite_start]**Asynchronous:** Event-driven communication using **RabbitMQ** and **MassTransit**[cite: 18, 63].
-* [cite_start]**Reliable Messaging:** Advanced implementation of the Outbox Pattern to ensure data consistency across services.
+### 4. Ordering Module
+* **Implementation:** Implementing **DDD, CQRS, and Clean Architecture** using Best Practices.
+* **Reliability:** Implement **Outbox Pattern** for Reliable Messaging w/ BasketCheckout Use Case.
 
 ---
 
-## 🐳 Infrastructure & DevOps
-
-* [cite_start]**Containerization:** The entire ecosystem is orchestrated using **Docker Compose**[cite: 43, 91].
-* [cite_start]**CI/CD Readiness:** Structured for automated builds and high-quality code standards[cite: 23, 68].
-* [cite_start]**Observability:** Integrated monitoring and logging via **Elasticsearch and Kibana**[cite: 24, 69].
+## 📡 Module Communications
+* **Sync Communications:** Between Catalog and Basket Modules with In-process Method Calls (Public APIs).
+* **Async Communications:** Between Modules w/ **RabbitMQ & MassTransit** for `UpdatePrice` between Catalog-Basket Modules.
 
 ---
 
-## 🚦 Getting Started
+## 🚀 Microservices Migration
+* Migration of EShop Modules to Microservices w/ **Stranger Fig Pattern**.
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [your-repository-url]
-    ```
-2.  **Infrastructure:**
-    * Ensure Docker Desktop is running.
-    * Run `docker-compose up -d` to launch PostgreSQL, Redis, RabbitMQ, and Keycloak.
-3.  **Launch:**
-    * Open the solution in Visual Studio 2022 or VS Code.
-    * Run the application and explore the Minimal API endpoints via Swagger.
+---
+
+## 🐳 Infrastructure
+* Orchestrated via **Docker-compose**, including PostgreSQL, Redis, Seq, RabbitMQ, and Keycloak.
